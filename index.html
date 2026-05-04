@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mama Mac's | Southern Comfort Food in Ashland, AL</title>
+    <style>
+        /* CSS VARIABLES - Warm, Southern, Cozy Palette */
+        :root {
+            --cream: #FAF7F2;
+            --brown: #4A3525;
+            --soft-red: #C84B31;
+            --dark-red: #A33B25;
+            --light-brown: #8D6E63;
+            --white: #FFFFFF;
+            --font-headings: 'Georgia', serif;
+            --font-body: 'Arial', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        /* GLOBAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: var(--font-body);
+            background-color: var(--cream);
+            color: var(--brown);
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+        h1, h2, h3, h4 {
+            font-family: var(--font-headings);
+            font-weight: normal;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+        .btn-primary {
+            background-color: var(--soft-red);
+            color: var(--white);
+            box-shadow: 0 4px 6px rgba(200, 75, 49, 0.3);
+        }
+        .btn-primary:hover {
+            background-color: var(--dark-red);
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: var(--white);
+            color: var(--brown);
+            border: 2px solid var(--brown);
+        }
+        .btn-secondary:hover {
+            background-color: var(--brown);
+            color: var(--white);
+        }
+
+        /* NAVIGATION */
+        header {
+            background-color: var(--white);
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .logo {
+            font-family: var(--font-headings);
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--soft-red);
+        }
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+        .nav-links a {
+            font-weight: bold;
+            color: var(--brown);
+            transition: var(--transition);
+        }
+        .nav-links a:hover {
+            color: var(--soft-red);
+        }
+        .nav-call {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--soft-red);
+        }
+
+        /* HERO SECTION */
+        /* --- NEW HERO SECTION --- */
+        .hero {
+            position: relative;
+            height: 80vh;
+            min-height: 600px;
+            overflow: hidden; /* This keeps the zoom from breaking the page size */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--white);
+            padding: 0 20px;
+            z-index: 1;
+        }
+
+        /* This creates the animated background behind your text */
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            z-index: -1;
+            /* Warmer gradient overlay + new appetizing food spread image */
+            background: linear-gradient(rgba(100, 43, 20, 0.6), rgba(74, 53, 37, 0.8)), 
+                        url('https://images.unsplash.com/photo-1543339308-43e59d6b73a6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80') center/cover;
+            /* Smooth, 15-second slow zoom */
+            animation: slowZoom 15s infinite alternate ease-in-out;
+        }
+
+        /* The animation rules */
+        @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.08); } 
+        }
+        /* ------------------------ */
+        .hero-content {
+            max-width: 800px;
+            animation: fadeIn 1.5s ease;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            font-family: var(--font-headings);
+            font-style: italic;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* TRUST SIGNALS */
+        .trust-section {
+            background-color: var(--white);
+            padding: 40px 5%;
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        .trust-item {
+            text-align: center;
+            flex: 1;
+            min-width: 250px;
+        }
+        .trust-item h3 {
+            color: var(--soft-red);
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* SECTION PADDING */
+        .section {
+            padding: 80px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            color: var(--brown);
+        }
+
+        /* FEATURED FOOD */
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        .food-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: var(--transition);
+        }
+        .food-card:hover {
+            transform: translateY(-5px);
+        }
+        .food-img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .food-info {
+            padding: 20px;
+            text-align: center;
+        }
+        .food-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* WHY PEOPLE COME BACK & ABOUT */
+        .split-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            align-items: center;
+        }
+        .split-content {
+            flex: 1;
+            min-width: 300px;
+        }
+        .split-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--soft-red);
+        }
+        .split-content p {
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+            color: var(--light-brown);
+        }
+        .feature-list {
+            list-style: none;
+        }
+        .feature-list li {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            padding-left: 30px;
+            position: relative;
+        }
+        .feature-list li::before {
+            content: '✓';
+            color: var(--soft-red);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        /* REVIEWS */
+        .reviews-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .review-card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 10px;
+            flex: 1;
+            min-width: 300px;
+            max-width: 400px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+        .stars {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .review-text {
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+        .review-author {
+            font-weight: bold;
+        }
+
+        /* MENU SECTION */
+        .menu-category {
+            margin-bottom: 40px;
+        }
+        .menu-category h3 {
+            font-size: 2rem;
+            color: var(--soft-red);
+            border-bottom: 2px solid var(--brown);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .menu-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-bottom: 1px dashed var(--light-brown);
+            padding-bottom: 10px;
+        }
+        .menu-item-title {
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        /* RESERVATION FORM */
+        .reservation-bg {
+            background-color: var(--white);
+            padding: 60px 5%;
+            border-top: 5px solid var(--soft-red);
+        }
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--cream);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: var(--font-body);
+        }
+
+        /* LOCATION & FOOTER */
+        .location-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 40px;
+            background-color: var(--brown);
+            color: var(--white);
+            padding: 60px 5%;
+        }
+        .location-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        .location-info h2 {
+            margin-bottom: 20px;
+            color: var(--cream);
+        }
+        .location-info p {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        .map-container {
+            flex: 1;
+            min-width: 300px;
+            height: 350px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        footer {
+            background-color: #2C1D11;
+            color: var(--cream);
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* MOBILE STICKY CTA */
+        .mobile-sticky-cta {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: var(--white);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            padding: 15px 10px;
+            z-index: 2000;
+            justify-content: space-around;
+        }
+        .mobile-sticky-cta .btn {
+            width: 45%;
+            padding: 12px 0;
+            font-size: 1rem;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1.2rem; }
+            .hero-buttons { flex-direction: column; }
+            .nav-links { display: none; } /* Simplify header for mobile */
+            .mobile-sticky-cta { display: flex; }
+            body { padding-bottom: 70px; } /* Space for sticky bar */
+            .split-section { flex-direction: column; }
+        }
+/* --- MODERN FLOATING ORDER BUTTON & MENU MODAL --- */
+        .floating-order-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--soft-red);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(200, 75, 49, 0.4);
+            cursor: pointer;
+            z-index: 9999;
+            animation: pulse 2s infinite;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(200, 75, 49, 0.7); }
+            70% { box-shadow: 0 0 0 15px rgba(200, 75, 49, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(200, 75, 49, 0); }
+        }
+
+        /* Order Modal */
+        .order-modal {
+            display: none; 
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(74, 53, 37, 0.9);
+            z-index: 10000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .order-modal-content {
+            background-color: var(--cream);
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 12px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2rem;
+            color: var(--soft-red);
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .pickup-badge {
+            display: inline-block;
+            background-color: #f59e0b;
+            color: #fff;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: -15px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .menu-list-category h3 {
+            color: var(--soft-red);
+            border-bottom: 2px solid var(--light-brown);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            margin-top: 20px;
+        }
+
+        .order-item-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+        }
+
+        .add-btn {
+            background-color: var(--brown);
+            color: var(--white);
+            border: none;
+            border-radius: 50%;
+            width: 30px; height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .add-btn:hover { background-color: var(--soft-red); }
+
+        .cart-section {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border: 2px solid var(--soft-red);
+        }
+
+        .cart-items { list-style: none; margin-bottom: 15px; }
+        .cart-items li { display: flex; justify-content: space-between; margin-bottom: 10px; font-size: 0.95rem;}
+        
+        .cart-total { font-size: 1.5rem; font-weight: bold; text-align: right; margin-bottom: 15px; color: var(--brown); }
+        
+        .checkout-input {
+            width: 100%; padding: 12px; margin-bottom: 15px;
+            border: 1px solid #ccc; border-radius: 5px; font-size: 1rem;
+        }
+
+        .success-msg {
+            display: none; background-color: #10b981; color: white;
+            text-align: center; padding: 15px; border-radius: 5px;
+            font-weight: bold; margin-top: 15px;
+        }
+        /* ---------------------------------------------------- */
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="logo">Mama Mac's</div>
+        <nav class="nav-links">
+            <a href="#menu">Menu</a>
+            <a href="#about">Our Story</a>
+            <a href="#reviews">Reviews</a>
+            <a href="#location">Find Us</a>
+        </nav>
+        <a href="tel:5551234567" class="nav-call hidden-mobile">📞 (555) 123-4567</a>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Home-Cooked Southern Comfort, Just Like Mama Made</h1>
+            <p>Fresh meals served daily in Ashland, Alabama</p>
+            <div class="hero-buttons">
+                <a href="tel:5551234567" class="btn btn-primary">📞 Call Now for Orders</a>
+                <a href="#location" class="btn btn-secondary">📍 Get Directions</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRUST SIGNALS -->
+    <section class="trust-section">
+        <div class="trust-item">
+            <h3>❤️ Loved by Locals</h3>
+            <p>A staple in the Ashland community.</p>
+        </div>
+        <div class="trust-item">
+            <h3>🍲 Fresh Daily Cooking</h3>
+            <p>Made from scratch every single morning.</p>
+        </div>
+        <div class="trust-item">
+            <h3>⭐ 5-Star Experience</h3>
+            <p>Southern hospitality at its absolute best.</p>
+        </div>
+    </section>
+
+    <!-- FEATURED FOOD -->
+    <section id="featured" class="section">
+        <h2 class="section-title">Our Famous Favorites</h2>
+        <div class="food-grid">
+            <div class="food-card">
+                <img src="fried-chicken.jpg" alt="Fried Chicken" class="food-img">
+                <div class="food-info">
+                    <h3>Golden Fried Chicken</h3>
+                    <p>Crispy on the outside, juicy on the inside. A secret family recipe.</p>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="https://images.unsplash.com/photo-1610057099431-d73a1c9d2f2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Mac and Cheese" class="food-img">
+                <div class="food-info">
+                    <h3>Baked Mac & Cheese</h3>
+                    <p>Three cheeses baked to a perfect bubbling golden brown crust.</p>
+                </div>
+            </div>
+            <div class="food-card">
+                <img src="peach-cobbler.jpg" alt="Peach Cobbler" class="food-img">
+                <div class="food-info">
+                    <h3>Warm Peach Cobbler</h3>
+                    <p>Served with a heavy scoop of homemade vanilla bean ice cream.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY PEOPLE COME BACK & ABOUT US -->
+    <section id="about" class="section" style="background-color: var(--white); max-width: 100%;">
+        <div class="section split-section">
+            <div class="split-content">
+                <h2>Why Folks Keep Coming Back</h2>
+                <ul class="feature-list">
+                    <li><strong>It Feels Like Home:</strong> Walk in a stranger, leave as family.</li>
+                    <li><strong>Friendly Service:</strong> We serve with a smile and a sweet tea.</li>
+                    <li><strong>Generous Portions:</strong> Nobody leaves Mama Mac's hungry!</li>
+                    <li><strong>Authentic Taste:</strong> Recipes passed down through generations.</li>
+                </ul>
+            </div>
+            <div class="split-content">
+                <h2>Our Story</h2>
+                <p>Mama Mac’s isn’t just a restaurant; it’s an extension of our family dining room. We opened our doors in Ashland because we believe there is nothing quite like the power of a hot, home-cooked meal to bring people together.</p>
+                <p>Whether you've lived in Alabama your whole life or you're just passing through on the highway, we promise to serve you real food, made with real love. Pull up a chair—supper's ready.</p>
+                <br>
+                <a href="tel:5551234567" class="btn btn-primary">Hungry Yet? Call Us!</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MENU SECTION -->
+    <section id="menu" class="section">
+        <h2 class="section-title">Our Simple & Honest Menu</h2>
+        
+        <div class="menu-category">
+            <h3>Mains (Served with 2 sides)</h3>
+            <div class="menu-item">
+                <span class="menu-item-title">Mama's Fried Chicken (2pc / 4pc)</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-title">Slow-Roasted Pot Roast</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-title">Country Fried Steak with White Gravy</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-title">Catfish (Fried or Blackened)</span>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Fixin's & Sides</h3>
+            <div class="menu-item">
+                <span class="menu-item-title">Baked Mac & Cheese • Collard Greens • Mashed Potatoes & Gravy • Fried Okra • Candied Yams • Green Beans</span>
+            </div>
+        </div>
+
+        <div class="menu-category">
+            <h3>Sweet Endings</h3>
+            <div class="menu-item">
+                <span class="menu-item-title">Warm Peach Cobbler</span>
+            </div>
+            <div class="menu-item">
+                <span class="menu-item-title">Banana Pudding</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="section" style="background-color: var(--white); max-width: 100%;">
+        <div class="section">
+            <h2 class="section-title">What Our Guests Are Saying</h2>
+            <div class="reviews-container">
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Best fried chicken I’ve had since my own grandmother passed. We drove 40 minutes just to eat here and it was worth every mile. The staff makes you feel right at home."</p>
+                    <p class="review-author">— Sarah T., Local Resident</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Found this gem while traveling through Alabama. The pot roast fell apart on my fork and the peach cobbler was incredible. Do not skip this place!"</p>
+                    <p class="review-author">— Mike D., Traveler</p>
+                </div>
+                <div class="review-card">
+                    <div class="stars">★★★★★</div>
+                    <p class="review-text">"Huge portions, reasonable prices, and the sweetest waitstaff. Mama Mac's is our family's go-to spot every Sunday after church."</p>
+                    <p class="review-author">— The Jenkins Family</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RESERVATION FORM -->
+    <section class="reservation-bg">
+        <div class="form-container">
+            <h2 style="text-align: center; color: var(--soft-red); font-size: 2rem; margin-bottom: 20px;">Save a Table for Us</h2>
+            <p style="text-align: center; margin-bottom: 30px;">Planning to visit with a group? Let us know when you're coming!</p>
+            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Thanks! We have received your request and will call to confirm.');">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" required placeholder="John Doe">
+                </div>
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <input type="tel" required placeholder="(555) 123-4567">
+                </div>
+                <div style="display: flex; gap: 15px;">
+                    <div class="form-group" style="flex: 1;">
+                        <label>Date</label>
+                        <input type="date" required>
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label>Guests</label>
+                        <select required>
+                            <option>2 People</option>
+                            <option>3 People</option>
+                            <option>4 People</option>
+                            <option>5+ People</option>
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Request Reservation</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- LOCATION & CONTACT -->
+    <section id="location" class="location-section">
+        <div class="location-info">
+            <h2>Come On Over</h2>
+            <p><strong>📍 Address:</strong><br> 123 Main Street<br> Ashland, AL 36251</p>
+            <p><strong>📞 Phone:</strong><br> <a href="tel:5551234567" style="text-decoration: underline;">(555) 123-4567</a></p>
+            <p><strong>🕒 Hours:</strong><br> 
+                Tuesday - Saturday: 11:00 AM - 8:00 PM<br>
+                Sunday: 11:00 AM - 3:00 PM<br>
+                Monday: Closed (Gone Fishin')
+            </p>
+            <br>
+            <a href="https://maps.google.com" target="_blank" class="btn btn-secondary">Get Directions</a>
+        </div>
+        <div class="map-container">
+            <!-- Generic Embed for Ashland AL to fulfill Map requirement -->
+            <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53360.29740510167!2d-85.8755675406086!3d33.27318029272373!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x888bc3b2dbf68595%3A0xc3b5e407ea45a6c0!2sAshland%2C%20AL%2036251!5e0!3m2!1sen!2sus!4v1698765432109!5m2!1sen!2sus" 
+                width="100%" 
+                height="100%" 
+                style="border:0;" 
+                allowfullscreen="" 
+                loading="lazy" 
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Mama Mac's Southern Comfort Food. All rights reserved.</p>
+    </footer>
+
+    <!-- MOBILE STICKY CTA -->
+    <div class="mobile-sticky-cta">
+        <a href="tel:5551234567" class="btn btn-primary">📞 Call Now</a>
+        <a href="#location" class="btn btn-secondary">📍 Directions</a>
+    </div>
+<!-- FLOATING ORDER BUTTON -->
+    <button class="floating-order-btn" onclick="openOrderModal()">
+        🛒 Order Now
+    </button>
+
+    <!-- FULL ORDERING MODAL -->
+    <div id="orderModal" class="order-modal">
+        <div class="order-modal-content">
+            <span class="close-modal" onclick="closeOrderModal()">&times;</span>
+            
+            <div>
+                <h2 style="color: var(--brown); font-size: 2.2rem;">Mama Mac's Menu</h2>
+                <span class="pickup-badge">🚗 Pickup Only</span>
+            </div>
+
+            <div class="menu-grid">
+                <!-- MENU ITEMS LEFT SIDE -->
+                <div>
+                    <div class="menu-list-category">
+                        <h3>Appetizers</h3>
+                        <div class="order-item-row"><span>Fried Green Tomatoes ($6.00)</span> <button class="add-btn" onclick="addToCart('Fried Green Tomatoes', 6.00)">+</button></div>
+                        <div class="order-item-row"><span>Fried Pickles ($6.00)</span> <button class="add-btn" onclick="addToCart('Fried Pickles', 6.00)">+</button></div>
+                        <div class="order-item-row"><span>Cheese Fries ($6.00)</span> <button class="add-btn" onclick="addToCart('Cheese Fries', 6.00)">+</button></div>
+                        <div class="order-item-row"><span>Bacon Ranch Fries ($6.75)</span> <button class="add-btn" onclick="addToCart('Bacon Ranch Fries', 6.75)">+</button></div>
+                    </div>
+
+                    <div class="menu-list-category">
+                        <h3>Salads</h3>
+                        <div class="order-item-row"><span>Chicken Salad (Fried/Grilled) ($12.00)</span> <button class="add-btn" onclick="addToCart('Chicken Salad', 12.00)">+</button></div>
+                        <div class="order-item-row"><span>Chef Salad ($10.00)</span> <button class="add-btn" onclick="addToCart('Chef Salad', 10.00)">+</button></div>
+                        <div class="order-item-row"><span>Side Salad ($5.00)</span> <button class="add-btn" onclick="addToCart('Side Salad', 5.00)">+</button></div>
+                    </div>
+
+                    <div class="menu-list-category">
+                        <h3>Extras</h3>
+                        <div class="order-item-row"><span>Loaded Baked Potato ($9.00)</span> <button class="add-btn" onclick="addToCart('Loaded Baked Potato', 9.00)">+</button></div>
+                        <div class="order-item-row"><span>BBQ Potato ($9.00)</span> <button class="add-btn" onclick="addToCart('BBQ Potato', 9.00)">+</button></div>
+                        <div class="order-item-row"><span>Baked Potato ($5.00)</span> <button class="add-btn" onclick="addToCart('Baked Potato', 5.00)">+</button></div>
+                        <div class="order-item-row"><span>Fries ($3.00)</span> <button class="add-btn" onclick="addToCart('Fries', 3.00)">+</button></div>
+                        <div class="order-item-row"><span>Onion Rings ($3.00)</span> <button class="add-btn" onclick="addToCart('Onion Rings', 3.00)">+</button></div>
+                    </div>
+
+                    <div class="menu-list-category">
+                        <h3>Beverages</h3>
+                        <div class="order-item-row"><span>Tea ($2.00)</span> <button class="add-btn" onclick="addToCart('Tea', 2.00)">+</button></div>
+                        <div class="order-item-row"><span>Lemonade ($2.50)</span> <button class="add-btn" onclick="addToCart('Lemonade', 2.50)">+</button></div>
+                        <div class="order-item-row"><span>Coke Products (20 oz.) ($2.50)</span> <button class="add-btn" onclick="addToCart('Coke Products', 2.50)">+</button></div>
+                        <div class="order-item-row"><span>Water ($1.25)</span> <button class="add-btn" onclick="addToCart('Water', 1.25)">+</button></div>
+                    </div>
+                </div>
+
+                <!-- MAIN MENU RIGHT SIDE -->
+                <div>
+                    <div class="menu-list-category">
+                        <h3>Main Menu</h3>
+                        <div class="order-item-row"><span>Hamburger Basket ($11.00)</span> <button class="add-btn" onclick="addToCart('Hamburger Basket', 11.00)">+</button></div>
+                        <div class="order-item-row"><span>Hamburger ($8.00)</span> <button class="add-btn" onclick="addToCart('Hamburger', 8.00)">+</button></div>
+                        <div class="order-item-row"><span>Cheese Burger Basket ($12.00)</span> <button class="add-btn" onclick="addToCart('Cheese Burger Basket', 12.00)">+</button></div>
+                        <div class="order-item-row"><span>Cheese Burger ($9.00)</span> <button class="add-btn" onclick="addToCart('Cheese Burger', 9.00)">+</button></div>
+                        <div class="order-item-row"><span>Bacon Cheeseburger Basket ($15.00)</span> <button class="add-btn" onclick="addToCart('Bacon Cheeseburger Basket', 15.00)">+</button></div>
+                        <div class="order-item-row"><span>Bacon Cheeseburger ($8.50)</span> <button class="add-btn" onclick="addToCart('Bacon Cheeseburger', 8.50)">+</button></div>
+                        <div class="order-item-row"><span>Double Cheeseburger Basket ($16.00)</span> <button class="add-btn" onclick="addToCart('Double Cheeseburger Basket', 16.00)">+</button></div>
+                        <div class="order-item-row"><span>Double Hamburger Basket ($15.00)</span> <button class="add-btn" onclick="addToCart('Double Hamburger Basket', 15.00)">+</button></div>
+                        <div class="order-item-row"><span>BLT Sandwich ($6.00)</span> <button class="add-btn" onclick="addToCart('BLT Sandwich', 6.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Plate Whole (2 Piece) ($19.00)</span> <button class="add-btn" onclick="addToCart('Fish Plate Whole 2pc', 19.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Plate Whole ($15.00)</span> <button class="add-btn" onclick="addToCart('Fish Plate Whole', 15.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Plate Fillet (2 piece) ($18.00)</span> <button class="add-btn" onclick="addToCart('Fish Plate Fillet 2pc', 18.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Plate Fillet ($14.00)</span> <button class="add-btn" onclick="addToCart('Fish Plate Fillet', 14.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Basket ($12.00)</span> <button class="add-btn" onclick="addToCart('Fish Basket', 12.00)">+</button></div>
+                        <div class="order-item-row"><span>Fish Sandwich ($8.00)</span> <button class="add-btn" onclick="addToCart('Fish Sandwich', 8.00)">+</button></div>
+                        <div class="order-item-row"><span>Chicken Sandwich Basket ($11.50)</span> <button class="add-btn" onclick="addToCart('Chicken Sandwich Basket', 11.50)">+</button></div>
+                        <div class="order-item-row"><span>Chicken Sandwich ($6.00)</span> <button class="add-btn" onclick="addToCart('Chicken Sandwich', 6.00)">+</button></div>
+                        <div class="order-item-row"><span>Chicken Finger Basket ($10.00)</span> <button class="add-btn" onclick="addToCart('Chicken Finger Basket', 10.00)">+</button></div>
+                        <div class="order-item-row"><span>Whole Wings Basket ($10.00)</span> <button class="add-btn" onclick="addToCart('Whole Wings Basket', 10.00)">+</button></div>
+                        <div class="order-item-row"><span>Wings ($6.00)</span> <button class="add-btn" onclick="addToCart('Wings', 6.00)">+</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CART SECTION -->
+            <div class="cart-section">
+                <h3 style="color: var(--brown); margin-bottom: 10px;">Your Tray (Cart)</h3>
+                <ul id="cartItems" class="cart-items">
+                    <li style="color: #666; font-style: italic;">Your tray is empty. Add some food!</li>
+                </ul>
+                <div class="cart-total">Total: $<span id="cartTotal">0.00</span></div>
+                
+                <input type="text" id="customerName" class="checkout-input" placeholder="Enter Your Name for Pickup" required>
+                <button class="btn btn-primary" style="width: 100%; font-size: 1.2rem;" onclick="sendOrder()">Send Order to WhatsApp 💬</button>
+                
+                <div id="successMessage" class="success-msg">
+                    ✅ Success! Your order has been sent to Mama Mac's. We'll see you soon!
+                </div>
+            </div>
+
+        </div>
+    </div>
+<script>
+        // System variables
+        let cart = [];
+        let total = 0;
+        const modal = document.getElementById('orderModal');
+
+        // Open & Close Modal
+        function openOrderModal() { modal.style.display = 'block'; }
+        function closeOrderModal() { modal.style.display = 'none'; }
+        
+        // Close if clicked outside the box
+        window.onclick = function(event) {
+            if (event.target == modal) closeOrderModal();
+        }
+
+        // Add to Cart Logic
+        function addToCart(itemName, itemPrice) {
+            const existingItem = cart.find(item => item.name === itemName);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ name: itemName, price: itemPrice, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        // Update the visual cart
+        function updateCartUI() {
+            const cartList = document.getElementById('cartItems');
+            const totalDisplay = document.getElementById('cartTotal');
+            cartList.innerHTML = '';
+            total = 0;
+
+            if (cart.length === 0) {
+                cartList.innerHTML = '<li style="color: #666; font-style: italic;">Your tray is empty. Add some food!</li>';
+            } else {
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.qty;
+                    total += itemTotal;
+                    cartList.innerHTML += `<li><span>${item.qty}x ${item.name}</span> <span>$${itemTotal.toFixed(2)}</span></li>`;
+                });
+            }
+            totalDisplay.innerText = total.toFixed(2);
+        }
+
+        // Send to WhatsApp
+        function sendOrder() {
+            const name = document.getElementById('customerName').value.trim();
+            
+            if (cart.length === 0) {
+                alert("Please add some food to your tray first!");
+                return;
+            }
+            if (!name) {
+                alert("Please enter your name for the pickup order!");
+                return;
+            }
+
+            // Format WhatsApp Message
+            let message = `*New Pickup Order!* 🍽️%0A%0A*Name:* ${name}%0A%0A*Order Details:*%0A`;
+            cart.forEach(item => {
+                message += `- ${item.qty}x ${item.name} ($${(item.price * item.qty).toFixed(2)})%0A`;
+            });
+            message += `%0A*Total: $${total.toFixed(2)}*`;
+
+            // >>> ENTER YOUR RESTAURANT WHATSAPP NUMBER HERE <<<
+            const restaurantPhone = "15551234567"; // e.g., 1 (US) + Area Code + Number
+            
+            // Open WhatsApp in new tab
+            window.open(`https://wa.me/${restaurantPhone}?text=${message}`, '_blank');
+
+            // Clear Cart & Show Success Message
+            cart = [];
+            updateCartUI();
+            document.getElementById('customerName').value = '';
+            
+            const successMsg = document.getElementById('successMessage');
+            successMsg.style.display = 'block';
+            
+            // Hide success message after 6 seconds
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+                closeOrderModal();
+            }, 6000);
+        }
+    </script>
+</body>
+</html>
